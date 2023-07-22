@@ -39,11 +39,17 @@ Bug 1: DataTable not updating after adding a new target through modal:
 - Make the necessary changes to ensure that the DataTable is updated with the new data after adding a target through the modal.
 - Test the functionality thoroughly to confirm that the DataTable is correctly updated.
 
+Answers Bug 1:
+There is missing logic after creating new targets through modal. I added mutateTargets after successfully created new target to ensure that the new targets is updated in the table.
+
 Bug 2: Duplication of data when clicking the sync target button:
 - Review the code associated with the sync target button functionality.
 - Identify the reason behind the duplication of data when the button is clicked.
 - Modify the code to prevent data duplication while maintaining the desired synchronization functionality.
 - Test the synchronization process to verify that the duplication issue is resolved.
+
+Answer Bug 2: 
+This bug occurs because of the useEffect Hook that triggers setAndTrimTargets always adding data instead of replacing the synced target data so i adjust the logic accordingly.
 
 Additional guidelines:
 - Ensure that your changes follow the existing coding style and conventions used in the codebase.
