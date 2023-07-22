@@ -16,7 +16,6 @@ import { FormikHelpers, useFormik } from 'formik';
 import uniqBy from 'lodash/uniqBy';
 import { useRouter } from 'next/router';
 
-
 import { useLoadingProgress } from 'components/Loading/LoadingProgress';
 import {
 	AddTargetsForm,
@@ -200,6 +199,27 @@ export function AddTargetsModal({
 			);
 			createTargets(newTargetsToCreate)
 				.then((res) => {
+					mutateTargets(
+						(prevValue) => {
+							return {
+								targets: [
+									...(prevValue?.targets ?? []),
+									...res.insert_targets.returning.map(
+										(targetFormValue, index) =>
+											({
+												id: res.insert_targets.returning[index].id,
+												label: targetFormValue.label,
+												project_id: projectId,
+												target: targetFormValue.target,
+												created_date:
+													res.insert_targets.returning[index].created_date,
+											} as TargetCompactFragment)
+									),
+								],
+							};
+						},
+						{ revalidate: false }
+					);
 					toast({
 						title: `Succesfully imported ${res.insert_targets.affected_rows} items`,
 						position: 'bottom-left',
@@ -306,7 +326,7 @@ export function AddTargetsModal({
 					/>
 				</ModalBody>
 				<ModalFooter>
-					<Button onClick={onClose}>Cancel</Button>
+					<Button onClick={() => onClose}>Cancel</Button>
 					<Button
 						ml={4}
 						color='primary'

@@ -105,7 +105,7 @@ export const ScansTargetsPage: NextPage<IProps> = ({ apiToken }) => {
 		}));
 
 		if (trimmedTargets) {
-			setTargets((prevTargets) => [...prevTargets, ...trimmedTargets]);
+			setTargets(() => trimmedTargets);
 		}
 	};
 
@@ -181,7 +181,7 @@ export const ScansTargetsPage: NextPage<IProps> = ({ apiToken }) => {
 	);
 
 	const removeSelectedTargets = async () => {
-    // @TODO not done
+		// @TODO not done
 	};
 
 	const handleCloseModal = (
@@ -260,4 +260,3 @@ export const ScansTargetsPage: NextPage<IProps> = ({ apiToken }) => {
 export default ScansTargetsPage;
 
 (ScansTargetsPage as any).layout = Admin;
-
